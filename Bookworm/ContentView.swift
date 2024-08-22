@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct PushButton: View {
+/*struct PushButton: View {
     let title: String
     @Binding var isOn: Bool
     
@@ -24,17 +25,20 @@ struct PushButton: View {
         .clipShape(.capsule)
         .shadow(radius: isOn ? 0 : 5)
     }
-}
+}*/
 
 struct ContentView: View {
     
-    @State private var rememberMe = false
+    /*@State private var rememberMe = false
     @AppStorage("notes") private var notes = ""
-    @AppStorage("notes1") private var notes1 = ""
+    @AppStorage("notes1") private var notes1 = ""*/
+    
+    @Environment(\.modelContext) var modelContext
+    @Query var student: [Student]
     
     var body: some View {
         NavigationStack {
-            VStack {
+            /*VStack {
                 PushButton(title: "Remember Me", isOn: $rememberMe)
                 Text(rememberMe ? "On" : "Off")
                 
@@ -47,7 +51,23 @@ struct ContentView: View {
                                 .navigationTitle("Notes")
                                 .padding()
             }
-            .padding()
+            .padding()*/
+            List(student) { student in
+                Text(student.name)
+            }
+            .navigationTitle("Classroom")
+            .toolbar {
+                Button("Add") {
+                    let firstNames = ["this", "application", "library", "uses", "passed", "invalid", "numeric", "value"]
+                    let lastNames = ["you", "want", "backtrace", "set", "portal", "top", "move", "our"]
+                    
+                    let chosenFirstName = firstNames.randomElement()!
+                    let chosenLastName = lastNames.randomElement()!
+                    
+                    let student = Student(id: UUID(), name: "\(chosenFirstName) \(chosenLastName)")
+                    modelContext.insert(student)
+                }
+            }
         }
     }
 }
