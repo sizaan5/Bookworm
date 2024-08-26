@@ -35,7 +35,8 @@ struct AddBookView: View {
                 }
                 
                 Section("Write a review") {
-                    TextEditor(text: $review)
+                    //TextEditor(text: $review)
+                    TextField("Write a review", text: $review, axis: .vertical)
                     RatingView(rating: $rating)
                     /*Picker("Rating", selection: $rating) {
                         ForEach(0..<6) {
@@ -50,6 +51,7 @@ struct AddBookView: View {
                         modelContext.insert(book)
                         dismiss()
                     }
+                    .disabled(title.isEmpty || author.isEmpty || genre.isEmpty ? true : false)
                 }
             }
             .navigationTitle("Add Book")
