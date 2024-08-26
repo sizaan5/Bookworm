@@ -37,6 +37,16 @@ struct DetailView: View {
                 .padding()
             RatingView(rating: .constant(book.rating))
                 .font(.largeTitle)
+            
+            Spacer()
+            Spacer()
+            Spacer()
+            Text("Added on")
+                .font(.title3)
+            Text("\(book.date.formatted(date: .abbreviated, time: .shortened))")
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.primary)
         }
         .navigationTitle(book.title)
         .toolbarTitleDisplayMode(.inline)
