@@ -38,12 +38,18 @@ struct ContentView: View {
                         }
                     }
                 }
+                .onDelete(perform: { indexSet in
+                    self.deleteBook(at: indexSet)
+                })
             }
             .navigationTitle("Bookworm")
             .navigationDestination(for: Book.self, destination: { book in
                 DetailView(book: book)
             })
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Add Book", systemImage: "plus") {
                         showingAddScreen.toggle()
@@ -53,6 +59,13 @@ struct ContentView: View {
             .sheet(isPresented: $showingAddScreen, content: {
                 AddBookView()
             })
+        }
+    }
+    
+    func deleteBook(at offsets: IndexSet) {
+        for offset in offsets {
+            let book = books[offset]
+            modelContext.delete(book)
         }
     }
 }
